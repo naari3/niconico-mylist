@@ -7,7 +7,7 @@ RSpec.describe Niconico::Mylist do
     before do
       WebMock.enable!
       stub_request(:get, 'http://www.nicovideo.jp/mylist/111?rss=2.0')
-        .to_return(status: 200, body: <<~XML)
+        .to_return(status: http_status, body: <<~XML)
           <?xml version="1.0" encoding="utf-8"?>
           <rss version="2.0"
                 xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -44,16 +44,26 @@ RSpec.describe Niconico::Mylist do
     end
     let(:items) { items_xml.map { |xml| Niconico::Mylist::Item.new(REXML::Document.new(xml).root) } }
 
-    it 'does assignment' do
-      expect(subject.title).to eq('title')
-      expect(subject.link).to eq("http://www.nicovideo.jp/mylist/#{id}")
-      expect(subject.description).to eq('description')
-      expect(subject.pub_date).to eq(Time.parse('Wed, 01 Mar 2017 09:10:34 +0900'))
-      expect(subject.last_build_date).to eq(Time.parse('Wed, 01 Mar 2017 09:10:34 +0900'))
-      expect(subject.creator).to eq('creator')
-      subject.items.zip(items).each do |a, b|
-        expect(a.title).to match(b.title)
+    context '200 OK' do
+      let(:http_status) { 200 }
+
+      it 'does assignment' do
+        expect(subject.title).to eq('title')
+        expect(subject.link).to eq("http://www.nicovideo.jp/mylist/#{id}")
+        expect(subject.description).to eq('description')
+        expect(subject.pub_date).to eq(Time.parse('Wed, 01 Mar 2017 09:10:34 +0900'))
+        expect(subject.last_build_date).to eq(Time.parse('Wed, 01 Mar 2017 09:10:34 +0900'))
+        expect(subject.creator).to eq('creator')
+        subject.items.zip(items).each do |a, b|
+          expect(a.title).to match(b.title)
+        end
       end
+    end
+
+    context '404 Not Found' do
+      let(:http_status) { 404 }
+
+      it { expect { subject }.to raise_error Niconico::Mylist::Error::NotFoundError }
     end
   end
 end

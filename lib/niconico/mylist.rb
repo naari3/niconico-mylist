@@ -2,6 +2,7 @@
 
 require 'niconico/mylist/config'
 require 'niconico/mylist/client'
+require 'niconico/mylist/error'
 require 'niconico/mylist/item'
 require 'niconico/mylist/xpathable'
 
