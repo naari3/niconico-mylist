@@ -2,8 +2,6 @@
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/niconico/mylist`. To experiment with that code, run `bin/console` for an interactive prompt.
 
-TODO: Delete this and the text above, and describe your gem
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -22,7 +20,23 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+``` ruby
+require 'niconico/mylist'
+
+mylist = Niconico::Mylist.find(42564899)
+# => #<Niconico::Mylist title: 音MAD creator: 名有りさん>
+mylist.title
+# => "音MAD"
+mylist.items
+# => [#<Niconico::Mylist::Item title: 関東Trapper>,
+ #<Niconico::Mylist::Item title: Fricken Dope☆.mp4>,
+ #<Niconico::Mylist::Item title: ラジオ体操の歌神社.mp4>,
+ #<Niconico::Mylist::Item title: THE SAFARI(BEAST).mp3>]
+mylist.items[0]
+# => #<Niconico::Mylist::Item title: 関東Trapper>
+mylist.items[0].link
+# => "http://www.nicovideo.jp/watch/sm31834553"
+```
 
 ## Development
 
