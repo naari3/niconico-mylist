@@ -1,10 +1,9 @@
 PATH
   remote: .
   specs:
-    niconico-mylist (0.1.0)
+    niconico-mylist (0.1.1)
       faraday
       faraday-encoding
-      webmock
 
 GEM
   remote: https://rubygems.org/
@@ -55,6 +54,7 @@ DEPENDENCIES
   pry
   rake (~> 10.0)
   rspec (~> 3.0)
+  webmock
 
 BUNDLED WITH
    1.16.1
