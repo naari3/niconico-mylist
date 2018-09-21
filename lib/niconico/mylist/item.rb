@@ -2,6 +2,8 @@
 
 require 'niconico/mylist/xpathable'
 
+require 'time'
+
 class Niconico::Mylist::Item
   include Niconico::Mylist::Xpathable
 
@@ -22,10 +24,14 @@ class Niconico::Mylist::Item
   end
 
   def pub_date
-    @pub_date ||= xpath_text('pub_date')
+    @pub_date ||= Time.parse(xpath_text('pubDate'))
   end
 
   def description
     @description ||= xpath_text('description')
+  end
+
+  def inspect
+    "#<#{self.class.name} title: #{title}>"
   end
 end

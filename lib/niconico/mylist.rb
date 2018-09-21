@@ -55,11 +55,11 @@ class Niconico::Mylist
   end
 
   def pub_date
-    @pub_date ||= Time.parse(xpath_text('channel/description'))
+    @pub_date ||= Time.parse(xpath_text('channel/pubDate'))
   end
 
   def last_build_date
-    @last_build_date ||= Time.parse(xpath_text('channel/description'))
+    @last_build_date ||= Time.parse(xpath_text('channel/lastBuildDate'))
   end
 
   def creator
@@ -68,5 +68,9 @@ class Niconico::Mylist
 
   def items
     @items ||= xpath_match('channel/item').map { |item| Niconico::Mylist::Item.new(item) }
+  end
+
+  def inspect
+    "#<#{self.class.name} title: #{title} creator: #{creator}>"
   end
 end
