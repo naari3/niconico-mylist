@@ -43,30 +43,30 @@ class Niconico::Mylist
   end
 
   def title
-    xpath_text('channel/title')
+    @title ||= xpath_text('channel/title').match(%r{マイリスト (.+?)‐ニコニコ動画})[1]
   end
 
   def link
-    xpath_text('channel/link')
+    @link ||= xpath_text('channel/link')
   end
 
   def description
-    xpath_text('channel/description')
+    @description ||= xpath_text('channel/description')
   end
 
   def pub_date
-    Time.parse(xpath_text('channel/description'))
+    @pub_date ||= Time.parse(xpath_text('channel/description'))
   end
 
   def last_build_date
-    Time.parse(xpath_text('channel/description'))
+    @last_build_date ||= Time.parse(xpath_text('channel/description'))
   end
 
   def creator
-    xpath_text('channel/dc:creator')
+    @creator ||= xpath_text('channel/dc:creator')
   end
 
   def items
-    xpath_match('channel/item').map {|item| Niconico::Mylist::Item.new(item) }
+    @items ||= xpath_match('channel/item').map { |item| Niconico::Mylist::Item.new(item) }
   end
 end
