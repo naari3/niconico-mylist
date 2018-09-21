@@ -5,11 +5,6 @@ AllCops:
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-  Exclude:
-    - config/application.rb
-
 Style/Documentation:
   Enabled: false
 

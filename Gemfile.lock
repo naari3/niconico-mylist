@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    niconico-mylist (0.2.0)
+    niconico-mylist (0.2.1)
       faraday
       faraday-encoding
 
