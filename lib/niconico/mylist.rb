@@ -3,12 +3,15 @@
 require 'niconico/mylist/config'
 require 'niconico/mylist/client'
 require 'niconico/mylist/item'
+require 'niconico/mylist/xpathable'
 
 require 'niconico/mylist/version'
 
 require 'time'
 
 class Niconico::Mylist
+  include Xpathable
+
   ENDPOINT = 'http://www.nicovideo.jp'
 
   class << self
@@ -40,40 +43,30 @@ class Niconico::Mylist
   end
 
   def title
-    xpath_text('title')
+    xpath_text('channel/title')
   end
 
   def link
-    xpath_text('link')
+    xpath_text('channel/link')
   end
 
   def description
-    xpath_text('description')
+    xpath_text('channel/description')
   end
 
   def pub_date
-    Time.parse(xpath_text('description'))
+    Time.parse(xpath_text('channel/description'))
   end
 
   def last_build_date
-    Time.parse(xpath_text('description'))
+    Time.parse(xpath_text('channel/description'))
   end
 
   def creator
-    xpath_text('dc:creator')
+    xpath_text('channel/dc:creator')
   end
 
   def items
-    xpath_match('item').map {|item| Niconico::Mylist::Item.new(item) }
-  end
-
-  private
-
-  def xpath_text(path)
-    REXML::XPath.first(@data, "channel/#{path}").text
-  end
-
-  def xpath_match(path)
-    REXML::XPath.match(@data, "channel/#{path}")
+    xpath_match('channel/item').map {|item| Niconico::Mylist::Item.new(item) }
   end
 end
