@@ -49,7 +49,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.16)
+  bundler (~> 2.0)
   niconico-mylist!
   pry
   rake (~> 10.0)
@@ -57,4 +57,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.16.1
+   2.0.1
